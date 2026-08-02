@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+host: https://www.udesk.cn
+description: >-
+  Probe of the /.well-known/ discovery surface on the primary Udesk host.
+  No discovery documents are published; every probed path returned 404
+  (absence recorded as valid data). /llms.txt was also probed (404, on both
+  the site root and the /doc/ developer center).
+documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /doc/llms.txt
+    status: 404
+  - path: /security.txt
+    status: 404

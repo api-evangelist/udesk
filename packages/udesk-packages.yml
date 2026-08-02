@@ -1,0 +1,82 @@
+generated: '2026-07-21'
+method: searched
+source: https://github.com/udesk + https://trunk.cocoapods.org/api/v1/pods/UdeskSDK + https://registry.npmjs.org/-/v1/search?text=udesk
+description: >-
+  First-party Udesk client SDKs are distributed through CocoaPods and the
+  github.com/udesk organization (mobile IM SDKs, call-center JS component,
+  multi-merchant mchat SDKs, audio/video AVS SDKs). No first-party packages
+  were found on npm, Maven Central, PyPI, NuGet, RubyGems, Packagist, or
+  crates.io (Maven Central search for "udesk" returns 0 results; npm results
+  are community wrappers). Android SDKs are distributed as source/AAR from
+  GitHub rather than a public Maven coordinate.
+packages:
+  - language: objective-c
+    registry: cocoapods
+    name: UdeskSDK
+    url: https://cocoapods.org/pods/UdeskSDK
+    install: pod 'UdeskSDK'
+    official: true
+    notes: >-
+      iOS IM SDK. 86 published versions, 1.0 (2016-03) through 5.4.1
+      (2025-07-14); pod owners include zhangshuangyi@udesk.cn and
+      yaoguanghui@udesk.cn (first-party confirmed).
+  - language: java
+    registry: github
+    name: udesk/UdeskSDK-Android
+    url: https://github.com/udesk/UdeskSDK-Android
+    install: clone / AAR from GitHub releases per docs at https://www.udesk.cn/doc/
+    official: true
+    notes: Android IM SDK, actively maintained (pushed 2026-04).
+  - language: objective-c
+    registry: github
+    name: udesk/UdeskSDK-iOS
+    url: https://github.com/udesk/UdeskSDK-iOS
+    install: pod 'UdeskSDK' (source mirror)
+    official: true
+    notes: Source repository for the UdeskSDK CocoaPod, actively maintained (pushed 2026-04).
+  - language: javascript
+    registry: github
+    name: udesk/udesk_callcenter_component
+    url: https://github.com/udesk/udesk_callcenter_component
+    install: clone from GitHub
+    official: true
+    notes: Call-center JS component (通话组件) for embedding call controls.
+  - language: java
+    registry: github
+    name: udesk/udesk_mchat_android
+    url: https://github.com/udesk/udesk_mchat_android
+    install: clone from GitHub
+    official: true
+    notes: Multi-merchant (mchat) Android SDK.
+  - language: objective-c
+    registry: github
+    name: udesk/udesk_mchat_ios
+    url: https://github.com/udesk/udesk_mchat_ios
+    install: clone from GitHub
+    official: true
+    notes: Multi-merchant (mchat) iOS SDK.
+  - language: objective-c
+    registry: github
+    name: udesk/UdeskAVSSDK-iOS
+    url: https://github.com/udesk/UdeskAVSSDK-iOS
+    install: clone from GitHub
+    official: true
+    notes: Audio/video service (video customer service) iOS SDK.
+  - language: java
+    registry: github
+    name: udesk/udesk_avs_android_sdk_demo
+    url: https://github.com/udesk/udesk_avs_android_sdk_demo
+    install: clone from GitHub
+    official: true
+    notes: AVS (audio/video) Android SDK integration demo.
+community_packages:
+  - language: javascript
+    registry: npm
+    name: react-native-udesk
+    url: https://www.npmjs.com/package/react-native-udesk
+    official: false
+  - language: javascript
+    registry: npm
+    name: cordova-plugin-udeskplugin
+    url: https://www.npmjs.com/package/cordova-plugin-udeskplugin
+    official: false

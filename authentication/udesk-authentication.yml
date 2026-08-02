@@ -1,0 +1,86 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.udesk.cn/doc/apiv2/intro/
+docs: https://www.udesk.cn/doc/apiv2/intro/
+description: >-
+  Udesk publishes no OpenAPI, so this profile is captured from the developer
+  docs rather than derived from securitySchemes. Every Udesk API family uses
+  signed-request authentication (HMAC-style digest signatures computed over
+  the admin email + API token + timestamp), not OAuth. There is no OAuth2 /
+  OIDC surface, hence no scopes/ artifact for this provider.
+summary:
+  types: [signature, bearer, jwt-sso]
+  oauth2_flows: []
+  api_key_in: [query]
+schemes:
+  - name: open-api-v2-signature
+    api: Udesk Open API v2
+    type: signature
+    in: query
+    docs: https://www.udesk.cn/doc/apiv2/intro/
+    detail: >-
+      sign=SHA256(email&open_api_token&timestamp&nonce&sign_version), passed as
+      query params email, timestamp, sign, nonce, sign_version=v2 on
+      https://[subdomain].udesk.cn/open_api_v1/*. The docs note SHA-1 as a
+      fallback when SHA-256 fails. The open_api_token is obtained by POST
+      /log_in with the super-admin email and password. Anti-replay: timestamp
+      must be within 5 minutes; nonce is single-use within 15 minutes. Failure
+      returns code 2059 ("open api签名不对").
+  - name: open-api-v1-signature
+    api: Udesk Open API v1 (legacy)
+    type: signature
+    in: query
+    docs: https://www.udesk.cn/doc/apiv1/intro/
+    detail: >-
+      sign=MD5(QueryString + "&" + Secret) where Secret is the SSO shared
+      secret from the admin console. The docs themselves flag this as a
+      security weakness ("V1 版本的接口存在安全隐患") and recommend migrating
+      to v2.
+  - name: robot-km-signature
+    api: Udesk Robot (KM) API
+    type: signature
+    in: query
+    docs: https://www.udesk.cn/doc/robot/intro/
+    detail: >-
+      sign=SHA1(email&api_token&timestamp) on https://km.udesk.cn/api/v1/*;
+      api_token comes from the KM console (管理-系统设置-秘钥). Default
+      timestamp expiry five minutes.
+  - name: servicego-signature
+    api: ServiceGo API
+    type: signature
+    in: query
+    docs: https://www.udesk.cn/doc/sercive/general-instructions/
+    detail: >-
+      sign=SHA1(email&api_token&timestamp) for tenants created before
+      2021-06-03, sign=SHA256(email&api_token&timestamp) for tenants created
+      after; on https://servicego.udesk.cn/api/v1/*.
+  - name: kcs-bearer
+    api: KCS knowledge API
+    type: http
+    scheme: bearer
+    docs: https://www.udesk.cn/doc/kcs/kcs-intro/
+    detail: >-
+      POST /api/auth/open/token with appId (tenant identifier) + userId
+      returns a token used as "Authorization: Bearer {token}" on
+      https://{tenant_kcs_domain}/api/sdk/*. Tokens expire every 50 minutes.
+  - name: servicego-sso-jwt
+    api: ServiceGo single sign-on
+    type: jwt
+    docs: https://www.udesk.cn/doc/sercive/sso/
+    detail: >-
+      SSO uses HS256-signed JWTs (header {"alg":"HS256","typ":"JWT"}, payload
+      aud=U_SERVICE, sub=email-or-job-number) signed with the tenant secret,
+      presented to /backend/auth/users/{accessKeyId}. SAML/OAuth/LDAP are only
+      available through the separate OneInto product.
+  - name: robot-webhook-signature
+    api: Robot webhook (outbound calls to customer endpoints)
+    type: signature
+    docs: https://www.udesk.cn/doc/robot/webhook/
+    detail: >-
+      Message-triggered webhooks sign with SHA1(integrationName&appKey&timestamp);
+      task-push webhooks sign with md5Hex(key + taskNodeId + sessionId + timestamp).
+notes:
+  - All APIs are designed for server-side calling only; the docs warn that
+    calling from web/mobile clients risks leaking the auth token.
+  - API signing is also advertised on the security page ("签名使用SHA2/AES256
+    等强壮的安全算法") at https://www.udesk.cn/product_safety_features.html.

@@ -1,0 +1,68 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.udesk.cn/doc/apiv2/intro/ (code错误码说明) + https://www.udesk.cn/doc/apiv2/webhook_v2/ + https://www.udesk.cn/doc/sercive/general-instructions/ + https://www.udesk.cn/doc/kcs/kcs-intro/
+format: vendor-code-envelope
+description: >-
+  Udesk's Open API returns a numeric code envelope ({code, message}) where
+  1000 means success; it is not RFC 9457 problem+json. Auth/anti-replay
+  failures have their own 2xxx/206xx code family, documented on the v2
+  general-instructions page. Per-resource pages (tickets, customers, ...)
+  document additional resource-specific codes; this catalog captures the
+  cross-cutting registry. The newer ServiceGo and KCS services instead use
+  standard HTTP status codes.
+envelope:
+  fields:
+    code: integer result code; 1000 = success
+    message: human-readable message (Chinese)
+    exception:message: optional detail string mirrored from the exception
+errors:
+  - code: 1000
+    title: Success
+    description: Request succeeded (not an error; the success sentinel of the envelope).
+  - code: 2000
+    title: Unknown error
+    description: Catch-all, including missing required parameters (e.g. "param is
+      missing or the value is empty").
+  - code: 2002
+    title: Invalid subdomain
+    description: The tenant subdomain in the request URL is wrong.
+  - code: 2005
+    title: Invalid parameters
+    description: Parameter error (e.g. wrong password on /log_in).
+  - code: 2015
+    title: Not an administrator
+    description: The authenticated identity is not a super-admin; resource not
+      found for the given account.
+  - code: 2058
+    title: Company not on a paid professional plan
+    description: The tenant has not paid for the edition that includes Open API access.
+  - code: 2059
+    title: Invalid Open API signature
+    description: Signature verification failed (wrong sign / auth parameters).
+    remediation: Recompute sign=SHA256(email&open_api_token&timestamp&nonce&sign_version);
+      fall back to SHA-1 if SHA-256 fails per docs.
+  - code: 20621
+    title: Bad timestamp format
+    description: Required parameter timestamp missing or malformed (Unix seconds).
+  - code: 20622
+    title: Timestamp skew exceeds 5 minutes
+    description: timestamp differs from server time by more than five minutes.
+    remediation: Sync client clock; regenerate the signature.
+  - code: 20623
+    title: Nonce replayed
+    description: The nonce value was already used within the last 15 minutes;
+      each request needs a fresh unique nonce.
+  - code: 20624
+    title: Nonce empty
+    description: Required auth parameter nonce missing or empty.
+http_status_families:
+  note: ServiceGo, KCS, and the Robot CASE service document near-standard HTTP
+    status semantics instead of the code envelope.
+  statuses:
+    '200': OK
+    '201': Created
+    '204': No Content
+    '400': Bad Request (client error)
+    '401': Unauthorized (unauthenticated)
+    '404': Not Found
+    '500': Internal Server Error

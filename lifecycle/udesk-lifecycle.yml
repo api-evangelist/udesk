@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.udesk.cn/doc/ + https://www.udesk.cn/service_agreement.html + https://www.udesk.cn/ucm/
+versioning:
+  scheme: URL path (+ sign_version parameter on the Open API)
+  current: Open API v2 (推荐/recommended)
+  legacy: Open API v1 (kept online for existing integrations; served at
+    /api/v1|/api/v2 with the weaker MD5 query-string signature — the docs
+    themselves advise migrating to v2 because "V1 版本的接口存在安全隐患")
+  auth_generation_change: ServiceGo switched its signature algorithm from SHA-1
+    to SHA-256 for tenants created on or after 2021-06-03 (both documented).
+  docs: https://www.udesk.cn/doc/apiv2/intro/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: >-
+    No formal deprecation policy or RFC 8594 Sunset/Deprecation header support
+    is published. v1 is de-facto legacy ("旧版 API 文档") but no retirement
+    date is announced. No Deprecation pointer emitted.
+sla:
+  url: https://www.udesk.cn/service_agreement.html
+  uptime_target: "99.9%"
+  detail: >-
+    Public SLA commits to 99.9% monthly service availability per tenant
+    (max ~43.2 minutes unavailable per month), with service-credit
+    compensation terms when missed.
+status_page: null
+status_page_note: No public status page was found on udesk.cn (no status.udesk.cn);
+  availability monitoring is described as internal (self-built "北斗" monitoring)
+  on https://www.udesk.cn/product_safety_features.html. No StatusPage pointer emitted.
+changelog:
+  url: null
+  note: >-
+    No public dated API changelog was found. The www.udesk.cn/ucm/ "update"
+    section is a news/content hub (verified /ucm/update/65980 is a partnership
+    press article), so no ChangeLog pointer is emitted.
+deprecated_operations: []

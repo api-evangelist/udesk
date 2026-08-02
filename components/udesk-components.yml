@@ -1,0 +1,77 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.udesk.cn/doc/ (第三方对接 / CallCenter PaaS / 视频客服 sections)
+description: >-
+  Udesk's embeddable, client-side surfaces — the widget/plugin layer that
+  drops customer-service UX into a customer's own web page, app, or agent
+  workbench, distinct from the mobile server SDKs catalogued in
+  packages/udesk-packages.yml. Grouped by family: web chat (WebIM), call
+  center (call component + CCPaaS frontend SDK/UI), ticketing plugins,
+  CEM/experience JS-SDK, video customer service, and ServiceGo workbench
+  components.
+docs:
+  - https://www.udesk.cn/doc/thirdparty/webim/
+  - https://www.udesk.cn/doc/thirdparty/callcomponent/
+  - https://www.udesk.cn/doc/callcenter/ccpaasfrontendui/
+families:
+  web_chat:
+    description: Embeddable web IM chat widget served from the tenant's Udesk instance.
+    components:
+      - name: WebIM web plugin
+        docs: https://www.udesk.cn/doc/thirdparty/webim/
+        description: JS snippet chat widget (im_client), with URL-parameter
+          identity passing and an encrypted-parameter variant.
+      - name: WebIM encrypted-parameter mode
+        docs: https://www.udesk.cn/doc/thirdparty/webim_encry/
+      - name: IM chat-log standalone page
+        docs: https://www.udesk.cn/doc/thirdparty/im_log_link/
+      - name: IM workbench assist component (send messages)
+        docs: https://www.udesk.cn/doc/thirdparty/im_custom_plugin/
+      - name: IM agent-client SDK
+        docs: https://www.udesk.cn/doc/thirdparty/agent_client/
+  call_center:
+    description: Embeddable call controls for the agent side.
+    components:
+      - name: Call component (通话组件)
+        docs: https://www.udesk.cn/doc/thirdparty/callcomponent/
+        source: https://github.com/udesk/udesk_callcenter_component
+      - name: CCPaaS frontend SDK API
+        docs: https://www.udesk.cn/doc/callcenter/ccpaasfrontendapi/
+      - name: CCPaaS frontend SDK UI
+        docs: https://www.udesk.cn/doc/callcenter/ccpaasfrontendui/
+  ticketing:
+    components:
+      - name: Ticket SDK (工单SDK)
+        docs: https://www.udesk.cn/doc/thirdparty/ticket_sdk/
+      - name: Ticket SDK (legacy)
+        docs: https://www.udesk.cn/doc/thirdparty/ticket_sdk_old/
+      - name: ServiceGo ticket plugin (工单插件)
+        docs: https://www.udesk.cn/doc/sercive/ticket-sdk/
+  experience:
+    components:
+      - name: CEM JS-SDK
+        docs: https://www.udesk.cn/doc/thirdparty/jssdk/
+        description: JS SDK for the customer-experience (微丰/CEM) product.
+  video:
+    components:
+      - name: Video customer service H5 integration
+        docs: https://www.udesk.cn/doc/imc/Udesk%E8%A7%86%E9%A2%91%E5%AE%A2%E6%9C%8DH5%E5%AF%B9%E6%8E%A5%E6%96%87%E6%A1%A3/
+      - name: Video customer service WeChat mini-program integration
+        docs: https://www.udesk.cn/doc/imc/Udesk%E8%A7%86%E9%A2%91%E5%AE%A2%E6%9C%8D%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AF%B9%E6%8E%A5/
+  servicego_workbench:
+    components:
+      - name: Case JS-SDK
+        docs: https://www.udesk.cn/doc/sercive/case-js-sdk/
+      - name: Assist component (辅助组件)
+        docs: https://www.udesk.cn/doc/sercive/assist-component/
+      - name: Open-CTI
+        docs: https://www.udesk.cn/doc/sercive/open-cti/
+  channel_integrations:
+    description: Prebuilt channel connectors documented alongside the components.
+    components:
+      - name: WeChat (微信) integration
+        docs: https://www.udesk.cn/doc/thirdparty/weixin/
+      - name: WeChat mini-program integration
+        docs: https://www.udesk.cn/doc/thirdparty/weixin_mini/
+      - name: Weibo (微博) integration
+        docs: https://www.udesk.cn/doc/thirdparty/weibo/

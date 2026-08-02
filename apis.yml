@@ -1,27 +1,169 @@
 aid: udesk
 name: Udesk
-description: 'Udesk is a company surfaced as a portfolio company of dcm-ventures and added to the API
-  Evangelist network as a stub for enrichment. Sector: enterprise. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: >-
+  Udesk, the flagship product of Beijing Wofeng Times Data Technology
+  (沃丰科技/Wofeng Technology), is a Chinese intelligent customer service and
+  customer-experience platform serving enterprises like Yili, BYD, Schneider
+  Electric, and China Merchants Group. The suite spans omnichannel IM
+  (20+ channels including WeChat, Weibo, and mini-programs), ticketing, a
+  cloud call center with CC PaaS APIs, GaussMind LLM-powered chat/voice
+  robots, ServiceGo field-service management, KCS knowledge management, and
+  video customer service. Its developer center publishes REST-style Open
+  APIs (v2 recommended, v1 legacy), event-callback webhooks, and
+  mobile/web SDKs, all tenant-scoped with signed-request authentication.
 url: https://raw.githubusercontent.com/api-evangelist/udesk/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://www.udesk.cn/images/index/udesk_fav.ico
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - dcm-ventures
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profile
+x-tier-reason: enriched-from-portfolio-lead
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v1
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Enterprise
-apis: []
+- Customer Service
+- Call Center
+- Ticketing
+- Chatbots
+- CRM
+- Knowledge Management
+- SaaS
+- China
+apis:
+- name: Udesk Open API v2
+  description: The recommended tenant-scoped Open API for customers, tickets,
+    organizations, agents, agent groups, departments, knowledge base, IM
+    sessions, call center, outbound call tasks, questionnaires, work logs, and
+    event-callback (webhook) management. Signed requests (SHA-256), JSON, 60
+    requests/minute default.
+  humanURL: https://www.udesk.cn/doc/apiv2/intro/
+  baseURL: https://demo.udesk.cn/open_api_v1
+  tags: [Customer Service, Tickets, Customers, Call Center, Webhooks]
+  properties:
+  - type: Documentation
+    url: https://www.udesk.cn/doc/apiv2/intro/
+  - type: Webhooks
+    url: https://www.udesk.cn/doc/apiv2/webhook_v2/
+- name: Udesk Open API v1 (legacy)
+  description: Legacy Open API kept for existing integrations (tickets,
+    customers, IM, call center, help center) with MD5 query-string signature
+    auth; the docs recommend migrating to v2.
+  humanURL: https://www.udesk.cn/doc/apiv1/intro/
+  baseURL: https://demo.udesk.cn/api/v1
+  tags: [Customer Service, Tickets, Customers, Legacy]
+  properties:
+  - type: Documentation
+    url: https://www.udesk.cn/doc/apiv1/intro/
+- name: Udesk Robot (GaussMind) API
+  description: Bot platform API for applications and robots, FAQ knowledge
+    bases, bot sessions, task-flow entities, external LLM integration, and the
+    robot webhook integration hook.
+  humanURL: https://www.udesk.cn/doc/robot/intro/
+  baseURL: https://km.udesk.cn/api/v1
+  tags: [Chatbots, Knowledge Base, AI]
+  properties:
+  - type: Documentation
+    url: https://www.udesk.cn/doc/robot/intro/
+- name: ServiceGo API
+  description: Field-service / after-sales platform API — records, custom
+    fields, filters, users, roles, queues, forms, approvals, SSO, event
+    subscriptions, operation logs, and warehouse management.
+  humanURL: https://www.udesk.cn/doc/sercive/general-instructions/
+  baseURL: https://servicego.udesk.cn/api/v1
+  tags: [Field Service, ITSM, Workflows]
+  properties:
+  - type: Documentation
+    url: https://www.udesk.cn/doc/sercive/general-instructions/
+  - type: Webhooks
+    url: https://www.udesk.cn/doc/sercive/subscribe-event/
+- name: Udesk KCS Knowledge API
+  description: Knowledge center service API for knowledge spaces, categories,
+    Q&A knowledge items, and file knowledge, authenticated with a 50-minute
+    Bearer token from /api/auth/open/token.
+  humanURL: https://www.udesk.cn/doc/kcs/kcs-intro/
+  baseURL: https://knowledgeservice.udesk.cn/api/sdk
+  tags: [Knowledge Management, Search]
+  properties:
+  - type: Documentation
+    url: https://www.udesk.cn/doc/kcs/kcs-intro/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/udesk-domain-security.yml
 - type: Website
-  url: http://www.udesk.cn/
+  url: https://www.udesk.cn/
+- type: DeveloperPortal
+  url: https://www.udesk.cn/doc/
+- type: Documentation
+  url: https://www.udesk.cn/doc/
+- type: APIReference
+  url: https://www.udesk.cn/doc/apiv2/intro/
+- type: GettingStarted
+  url: https://www.udesk.cn/doc/#_1
+- type: Support
+  url: https://udesk.udesk.cn/hc
+- type: Blog
+  url: https://blog.udesk.cn/
+- type: GitHubOrganization
+  url: https://github.com/udesk
+- type: SignUp
+  url: https://cb.s2.udesk.cn/register
+- type: TermsOfService
+  url: https://www.udesk.cn/terms_service.html
+- type: PrivacyPolicy
+  url: https://www.udesk.cn/terms_service.html
+- type: Packages
+  url: packages/udesk-packages.yml
+- type: SDKs
+  url: packages/udesk-packages.yml
+- type: WellKnown
+  url: well-known/udesk-well-known.yml
+- type: LLMsTxt
+  url: llms/udesk-llms.txt
+- type: Authentication
+  url: authentication/udesk-authentication.yml
+- type: Conventions
+  url: conventions/udesk-conventions.yml
+- type: ErrorCatalog
+  url: errors/udesk-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/udesk-lifecycle.yml
+- type: RateLimits
+  url: rate-limits/udesk-rate-limits.yml
+- type: Conformance
+  url: conformance/udesk-conformance.yml
+- type: Compliance
+  url: https://www.udesk.cn/product_safety_features.html
+- type: TrustCenter
+  url: security/udesk-trust-center.yml
+- type: Components
+  url: components/udesk-components.yml
+- type: AsyncAPI
+  url: asyncapi/udesk-webhooks-asyncapi.yml
+- type: Webhooks
+  url: https://www.udesk.cn/doc/apiv2/webhook_v2/

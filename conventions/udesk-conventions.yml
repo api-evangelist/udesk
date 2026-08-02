@@ -1,0 +1,98 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://www.udesk.cn/doc/apiv2/intro/ (Open API v2 general instructions),
+  https://www.udesk.cn/doc/apiv1/intro/,
+  https://www.udesk.cn/doc/sercive/general-instructions/ (ServiceGo),
+  https://www.udesk.cn/doc/robot/intro/ (Robot/KM),
+  https://www.udesk.cn/doc/kcs/kcs-intro/ (KCS)
+description: >-
+  Cross-cutting request/response semantics for Udesk's API families. Udesk
+  publishes no OpenAPI; everything here is captured from the published
+  developer docs. The platform is tenant-scoped REST-over-HTTPS with signed
+  requests, JSON bodies, page-based pagination, a numeric code envelope
+  (1000 = success) on the Open API, and closer-to-standard HTTP status
+  semantics on the newer ServiceGo/KCS services.
+
+api_style: REST over HTTPS; JSON (UTF-8) requests and responses; GET/POST/PUT/DELETE
+
+base_url_pattern:
+  open_api_v2: https://[subdomain].udesk.cn/open_api_v1/[path]   # sign_version=v2
+  open_api_v1: https://[subdomain].udesk.cn/api/v1/[path]        # legacy, also /api/v2 for 1.2
+  robot_km: https://km.udesk.cn/api/v1/[path]
+  servicego: https://servicego.udesk.cn/api/v1/[path]
+  kcs: https://{tenant_kcs_domain}/api/sdk/[path]
+  note: >-
+    Every tenant gets its own subdomain; docs use demo.udesk.cn as the example
+    tenant. The v2 Open API is served under the /open_api_v1 path prefix with
+    sign_version=v2 (the path prefix and the product version differ).
+
+authentication:
+  style: signed requests (digest signatures in query params) — see authentication/udesk-authentication.yml
+  anti_replay:
+    timestamp_skew: 5 minutes (codes 20621/20622)
+    nonce: single-use within 15 minutes (codes 20623/20624), v2 only
+
+request_encoding:
+  content_type: application/json
+  note: Create/update calls send a UTF-8 JSON body with Content-Type application/json
+    (except the legacy call-center dial and call-log endpoints, which the v1 docs exempt).
+
+response_format:
+  default: JSON (UTF-8)
+
+pagination:
+  open_api_v2:
+    style: page-based
+    request_params: [page, per_page]
+    response_meta: {object: meta, fields: [current_page, total_pages, total_count]}
+  servicego_kcs:
+    style: page-based
+    response_meta: {object: paging, fields: [pageNum, pageSize, total]}
+  docs: https://www.udesk.cn/doc/apiv2/intro/
+
+error_envelope:
+  open_api:
+    media_type: application/json
+    rfc9457: false
+    shape: '{ "code", "message" }  (code 1000 = success; non-1000 = error)'
+    detail: errors/udesk-error-codes.yml
+  servicego_kcs:
+    style: HTTP status codes (200/201/204/400/401/404/500) documented per service
+  docs: https://www.udesk.cn/doc/apiv2/intro/
+
+idempotency:
+  supported: false
+  note: >-
+    No idempotency-key mechanism is documented anywhere in the developer docs.
+    The closest surface is the batch-ticket-create unique_id echo
+    (success_unique_ids/failed_unique_ids in the completion callback), which
+    is a correlation aid, not an idempotency contract. No Idempotency pointer
+    is emitted for this provider.
+
+rate_limits:
+  open_api_v2: 60 requests/minute per tenant (default)
+  servicego: 60 requests/minute (default)
+  kcs: 8 requests/second (Guava RateLimiter, 100 ms token wait)
+  signaling: no rate-limit response headers or 429 semantics documented
+  detail: rate-limits/udesk-rate-limits.yml
+
+versioning:
+  scheme: URL path + sign_version parameter
+  current: Open API v2 (recommended); v1 kept for legacy integrations
+  detail: lifecycle/udesk-lifecycle.yml
+
+request_tracing:
+  note: Batch operations return a trace_id in the result payload; no
+    request-id header contract is documented.
+
+field_expansion: not documented
+metadata: custom_fields objects (SelectField_N / TextField_N keys) appear on
+  customers, organizations, tickets, and business records
+webhooks: asyncapi/udesk-webhooks-asyncapi.yml (13 event callbacks + call event push)
+
+cross_links:
+  authentication: authentication/udesk-authentication.yml
+  errors: errors/udesk-error-codes.yml
+  lifecycle: lifecycle/udesk-lifecycle.yml
+  rate_limits: rate-limits/udesk-rate-limits.yml

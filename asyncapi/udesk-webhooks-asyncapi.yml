@@ -1,0 +1,211 @@
+asyncapi: '2.6.0'
+x-generated: '2026-07-21'
+x-method: derived
+x-source: https://www.udesk.cn/doc/apiv2/webhook_v2/ + https://www.udesk.cn/doc/thirdparty/call_detail_push/ + https://www.udesk.cn/doc/sercive/subscribe-event/
+info:
+  title: Udesk Event Callbacks (Webhooks)
+  version: '1.0.0'
+  description: |
+    Event surface derived from Udesk's published webhook documentation (Udesk
+    ships no AsyncAPI of its own). Three webhook families are documented:
+
+    - **Open API event callbacks (webhook_v2)** — Udesk POSTs
+      `{action, message}` JSON to a customer-registered push_url for 13
+      subscribable events. Endpoints are managed through the signed Open API
+      operations `POST /webhook_create`, `/webhook_update`, `/webhook_destroy`,
+      `/webhook_list`.
+    - **Call event push (通话事件推送)** — call-lifecycle pushes (call start,
+      answer, hangup, call end) with recording URL and full timing fields,
+      configured in the admin console.
+    - **ServiceGo event subscriptions** — approval created, record deleted,
+      record restored, record merged.
+
+    The Robot webhook (https://www.udesk.cn/doc/robot/webhook/) is a
+    request/response integration hook (Udesk calls your endpoint to fetch bot
+    answers or task-flow data), not an event feed, and is documented in
+    authentication/ and llms/ rather than modeled as a channel here.
+  contact:
+    name: Udesk Developer Center
+    url: https://www.udesk.cn/doc/
+defaultContentType: application/json
+servers:
+  customerEndpoint:
+    url: 'https://{customerHost}/{path}'
+    protocol: https
+    description: Customer-hosted callback URL registered via POST /webhook_create
+      (http and https both supported per docs). Udesk is the HTTP client.
+    variables:
+      customerHost:
+        default: www.example.com
+      path:
+        default: push_url
+channels:
+  event-callback:
+    description: Open API v2 event callbacks — one POST per event, body {action, message}.
+    subscribe:
+      operationId: receiveUdeskEvent
+      summary: Receive a Udesk event callback
+      message:
+        oneOf:
+          - $ref: '#/components/messages/CustomerCreate'
+          - $ref: '#/components/messages/CustomerUpdate'
+          - $ref: '#/components/messages/CustomerDestroy'
+          - $ref: '#/components/messages/OrganizationCreate'
+          - $ref: '#/components/messages/OrganizationUpdate'
+          - $ref: '#/components/messages/OrganizationDestroy'
+          - $ref: '#/components/messages/ImSubSessionCreate'
+          - $ref: '#/components/messages/ImSubSessionClose'
+          - $ref: '#/components/messages/ShutQueueCreate'
+          - $ref: '#/components/messages/AgentNoteUpdate'
+          - $ref: '#/components/messages/ImSurveyVoteCreate'
+          - $ref: '#/components/messages/UserGroupCreate'
+          - $ref: '#/components/messages/UserGroupUpdate'
+          - $ref: '#/components/messages/UserGroupDestroy'
+  call-event-push:
+    description: Call-center call event push — fired at call start, connect
+      (customer/agent answer), hangup, and call end.
+    subscribe:
+      operationId: receiveCallEvent
+      summary: Receive a call event push
+      message:
+        $ref: '#/components/messages/CallEventPush'
+  servicego-subscribe-event:
+    description: ServiceGo record/approval event subscriptions.
+    subscribe:
+      operationId: receiveServiceGoEvent
+      summary: Receive a ServiceGo subscription event
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SgApprovalCreate'
+          - $ref: '#/components/messages/SgRecordDelete'
+          - $ref: '#/components/messages/SgRecordRestore'
+          - $ref: '#/components/messages/SgRecordMerge'
+components:
+  messages:
+    CustomerCreate:
+      name: Customer_create
+      title: Customer created
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    CustomerUpdate:
+      name: Customer_update
+      title: Customer updated (id + changes diff map)
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    CustomerDestroy:
+      name: Customer_destroy
+      title: Customer deleted
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    OrganizationCreate:
+      name: Organization_create
+      title: Customer organization created
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    OrganizationUpdate:
+      name: Organization_update
+      title: Customer organization updated (id + changes diff map)
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    OrganizationDestroy:
+      name: Organization_destroy
+      title: Customer organization deleted
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    ImSubSessionCreate:
+      name: ImSubSession_create
+      title: IM session created (includes im_sub_session_log)
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    ImSubSessionClose:
+      name: ImSubSession_close
+      title: IM session closed (session log + full chat transcript im_log_infos)
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    ShutQueueCreate:
+      name: ShutQueue_create
+      title: Customer abandoned the IM queue
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    AgentNoteUpdate:
+      name: AgentNote_update
+      title: Business record updated after IM session / CC call close
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    ImSurveyVoteCreate:
+      name: ImSurveyVote_create
+      title: Satisfaction survey first saved
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    UserGroupCreate:
+      name: UserGroup_create
+      title: Agent group created
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    UserGroupUpdate:
+      name: UserGroup_update
+      title: Agent group renamed or membership changed
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    UserGroupDestroy:
+      name: UserGroup_destroy
+      title: Agent group deleted
+      payload: {$ref: '#/components/schemas/ActionEnvelope'}
+    CallEventPush:
+      name: call_event_push
+      title: Call event (start / connect / hangup / end)
+      payload: {$ref: '#/components/schemas/CallEvent'}
+    SgApprovalCreate:
+      name: servicego_approval_create
+      title: ServiceGo approval created (event 1)
+      payload: {$ref: '#/components/schemas/ServiceGoEvent'}
+    SgRecordDelete:
+      name: servicego_record_delete
+      title: ServiceGo record deleted (event 2)
+      payload: {$ref: '#/components/schemas/ServiceGoEvent'}
+    SgRecordRestore:
+      name: servicego_record_restore
+      title: ServiceGo record restored (event 3)
+      payload: {$ref: '#/components/schemas/ServiceGoEvent'}
+    SgRecordMerge:
+      name: servicego_record_merge
+      title: ServiceGo records merged (event 4)
+      payload: {$ref: '#/components/schemas/ServiceGoEvent'}
+  schemas:
+    ActionEnvelope:
+      type: object
+      required: [action, message]
+      properties:
+        action:
+          type: string
+          description: Event type name (e.g. Customer_create, ImSubSession_close).
+        message:
+          type: object
+          description: Event payload; shape varies per event (full object on
+            create, {id, changes} diff map on update, {id} on destroy).
+    CallEvent:
+      type: object
+      description: Fields documented at https://www.udesk.cn/doc/thirdparty/call_detail_push/
+      properties:
+        call_id: {type: string, description: Unique id for a series of calls with one customer}
+        conversation_id: {type: integer, description: Current call id}
+        timestamp: {type: string}
+        nick_name: {type: string}
+        customer_phone: {type: string}
+        mobile_area: {type: string}
+        display_number: {type: string, description: Trunk number}
+        workflow: {type: string, enum: [in, out_callback, out_direct, out_auto]}
+        call_result: {type: string}
+        is_leave_message: {type: boolean}
+        total_time: {type: integer, description: Call duration in seconds}
+        record_url: {type: string, description: Call recording URL}
+        survey: {type: string}
+        agent_id: {type: integer}
+        agent_email: {type: string}
+        agent_nick_name: {type: string}
+        customer_ring_at: {type: string}
+        agent_ring_at: {type: string}
+        customer_answer_at: {type: string}
+        agent_answer_at: {type: string}
+        customer_hangup_at: {type: string}
+        agent_hangup_at: {type: string}
+        queue_statue: {type: string}
+        queue_time: {type: string}
+    ServiceGoEvent:
+      type: object
+      description: Fields documented at https://www.udesk.cn/doc/sercive/subscribe-event/
+      properties:
+        event: {type: integer, description: '1 approval-create, 2 delete, 3 restore, 4 merge'}
+        eventName: {type: string}
+        operateTime: {type: string}
+        operateUserId: {type: integer}
+        operateUserName: {type: string}
+        objectId: {type: integer}
+        objectName: {type: string}

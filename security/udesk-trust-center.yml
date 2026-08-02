@@ -1,0 +1,28 @@
+generated: '2026-07-21'
+method: searched
+probe: true
+url: https://www.udesk.cn/product_safety_features.html
+status: 200
+certifications:
+  - ISO 27001:2013
+  - CSA-STAR
+  - 网络安全等级保护三级 (China MLPS Level 3)
+  - 可信云认证 NO.07014 (Trusted Cloud)
+description: >-
+  Udesk (Wofeng Technology) publishes a dedicated privacy-and-data-protection
+  page covering infrastructure security (Huawei/Alibaba/Tencent cloud, each
+  CSA-STAR / ISO 27017:2015 / ISO 27001:2013 certified), network security
+  (BGP DDoS protection, WAF, VPC + API gateway), forced HTTPS transport
+  encryption, monthly penetration testing, a dedicated security incident
+  response team, SSO/MFA/IP-allowlist product controls, and SHA-2/AES-256 API
+  signing. Named company certifications: ISO 27001:2013, CSA-STAR, MLPS
+  Level 3, and Trusted Cloud NO.07014.
+evidence:
+  - source: https://www.udesk.cn/product_safety_features.html
+    keywords: [ISO27001:2013, CSA-STAR, 网络安全等级保护, 可信云认证, 渗透测试, 应急响应]
+notes:
+  - No public vulnerability-disclosure program, bug bounty, or security.txt was
+    found (security.txt probes 404; no HackerOne/Bugcrowd/Intigriti program
+    located), so no vulnerability-disclosure artifact is emitted.
+  - SLA (99.9% availability) is published separately at
+    https://www.udesk.cn/service_agreement.html.

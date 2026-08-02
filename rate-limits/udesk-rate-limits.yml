@@ -1,0 +1,45 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Udesk
+providerId: udesk
+created: '2026-07-21'
+modified: '2026-07-21'
+generated: '2026-07-21'
+method: searched
+tags:
+  - Rate Limiting
+  - Customer Service
+description: >-
+  Published rate limits for Udesk's API families. The Open API (v2) and
+  ServiceGo document a default of 60 calls per minute per tenant; the KCS
+  knowledge SDK API documents a server-side Guava RateLimiter at 8 requests
+  per second (100 ms token-acquisition timeout). No rate-limit response
+  headers or 429 semantics are documented.
+sources:
+  - https://www.udesk.cn/doc/apiv2/intro/
+  - https://www.udesk.cn/doc/sercive/general-instructions/
+  - https://www.udesk.cn/doc/kcs/kcs-intro/
+limits:
+  - name: Open API v2 (default)
+    scope: tenant
+    metric: requests_per_minute
+    limit: 60
+    timeFrame: minute
+  - name: ServiceGo API (default)
+    scope: tenant
+    metric: requests_per_minute
+    limit: 60
+    timeFrame: minute
+  - name: KCS SDK API
+    scope: service
+    metric: requests_per_second
+    limit: 8
+    timeFrame: second
+policies:
+  - name: Server-side only
+    description: APIs are designed for server-side calling; client-side calls risk
+      token leakage and are disallowed by the docs.
+  - name: Anti-replay
+    description: v2 requests must carry a timestamp within 5 minutes of server time
+      and a nonce that is unique within 15 minutes.

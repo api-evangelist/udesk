@@ -47,6 +47,17 @@ tags:
 - Ticketing
 - Chatbots
 - CRM
+- Knowledge-Management
+- Software-as-a-Service
+- China
+tags_raw:
+- Company
+- Enterprise
+- Customer Service
+- Call Center
+- Ticketing
+- Chatbots
+- CRM
 - Knowledge Management
 - SaaS
 - China
@@ -59,7 +70,18 @@ apis:
     requests/minute default.
   humanURL: https://www.udesk.cn/doc/apiv2/intro/
   baseURL: https://demo.udesk.cn/open_api_v1
-  tags: [Customer Service, Tickets, Customers, Call Center, Webhooks]
+  tags:
+  - Customer Service
+  - Tickets
+  - Customers
+  - Call Center
+  - Webhook
+  tags_raw:
+  - Customer Service
+  - Tickets
+  - Customers
+  - Call Center
+  - Webhooks
   properties:
   - type: Documentation
     url: https://www.udesk.cn/doc/apiv2/intro/
@@ -81,7 +103,14 @@ apis:
     robot webhook integration hook.
   humanURL: https://www.udesk.cn/doc/robot/intro/
   baseURL: https://km.udesk.cn/api/v1
-  tags: [Chatbots, Knowledge Base, AI]
+  tags:
+  - Chatbots
+  - Knowledge Base
+  - Artificial Intelligence
+  tags_raw:
+  - Chatbots
+  - Knowledge Base
+  - AI
   properties:
   - type: Documentation
     url: https://www.udesk.cn/doc/robot/intro/
@@ -103,7 +132,12 @@ apis:
     Bearer token from /api/auth/open/token.
   humanURL: https://www.udesk.cn/doc/kcs/kcs-intro/
   baseURL: https://knowledgeservice.udesk.cn/api/sdk
-  tags: [Knowledge Management, Search]
+  tags:
+  - Knowledge-Management
+  - Search
+  tags_raw:
+  - Knowledge Management
+  - Search
   properties:
   - type: Documentation
     url: https://www.udesk.cn/doc/kcs/kcs-intro/

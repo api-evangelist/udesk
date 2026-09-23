@@ -1,12 +1,12 @@
 generated: '2026-07-21'
 method: searched
 host: https://www.udesk.cn
-description: >-
-  Probe of the /.well-known/ discovery surface on the primary Udesk host.
-  No discovery documents are published; every probed path returned 404
-  (absence recorded as valid data). /llms.txt was also probed (404, on both
-  the site root and the /doc/ developer center).
-documents:
+description: Probe of the /.well-known/ discovery surface on the primary Udesk host. No discovery documents
+  are published; every probed path returned 404 (absence recorded as valid data). /llms.txt was also probed
+  (404, on both the site root and the /doc/ developer center).
+hosts:
+- host: https://www.udesk.cn
+  documents:
   - path: /.well-known/security.txt
     status: 404
   - path: /.well-known/openid-configuration
@@ -17,9 +17,8 @@ documents:
     status: 404
   - path: /.well-known/ai-plugin.json
     status: 404
-  - path: /llms.txt
-    status: 404
-  - path: /doc/llms.txt
-    status: 404
-  - path: /security.txt
-    status: 404
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.

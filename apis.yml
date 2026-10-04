@@ -60,7 +60,7 @@ tags:
 - Ticketing
 - Chatbots
 - CRM
-- Knowledge-Management
+- Knowledge Management
 - Software-as-a-Service
 - China
 tags_raw:
@@ -74,6 +74,7 @@ tags_raw:
 - Knowledge Management
 - SaaS
 - China
+- Knowledge-Management
 apis:
 - name: Udesk Open API v2
   description: The recommended tenant-scoped Open API for customers, tickets,
@@ -85,7 +86,7 @@ apis:
   baseURL: https://demo.udesk.cn/open_api_v1
   tags:
   - Customer Service
-  - Tickets
+  - Ticketing
   - Customers
   - Call Center
   - Webhook
@@ -146,11 +147,12 @@ apis:
   humanURL: https://www.udesk.cn/doc/kcs/kcs-intro/
   baseURL: https://knowledgeservice.udesk.cn/api/sdk
   tags:
-  - Knowledge-Management
+  - Knowledge Management
   - Search
   tags_raw:
   - Knowledge Management
   - Search
+  - Knowledge-Management
   properties:
   - type: Documentation
     url: https://www.udesk.cn/doc/kcs/kcs-intro/

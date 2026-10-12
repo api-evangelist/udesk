@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/udesk/integrations
+- https://n8n.io/integrations/udesk/
+- https://composio.dev/toolkits/udesk
+- https://monid.ai/tools/udesk
+checked:
+- https://composio.dev/toolkits/udesk
+- https://monid.ai/tools/udesk
+- https://n8n.io/integrations/udesk/
+- https://zapier.com/apps/udesk/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
